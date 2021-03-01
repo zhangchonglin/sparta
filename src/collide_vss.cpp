@@ -457,7 +457,7 @@ void CollideVSS::EEXCHANGE_NonReactingEDisposal(Particle::OnePart *ip,
       double rotn_phi = species[sp].rotrel;
 
       if (rotdof) {
-        if (relaxflag == VARIABLE) rotn_phi = rotrel(sp,E_Dispose);
+        if (relaxflag == VARIABLE) rotn_phi = rotrel(sp,E_Dispose+p->erot);
         if (rotn_phi >= random->uniform()) {
           if (rotstyle == NONE) {
             p->erot = 0.0;
@@ -783,7 +783,7 @@ double CollideVSS::sample_bl(RanPark *random, double Exp_1, double Exp_2)
 
 double CollideVSS::rotrel(int isp, double Ec)
 {
-  double Tr = Ec /(update->boltz * (2.5-params[isp][isp].omega));
+  double Tr = Ec /(update->boltz * (4.0-params[isp][isp].omega));
   double rotphi = (1.0+params[isp][isp].rotc2/sqrt(Tr) + params[isp][isp].rotc3/Tr)
                 / params[isp][isp].rotc1;
   return rotphi;
